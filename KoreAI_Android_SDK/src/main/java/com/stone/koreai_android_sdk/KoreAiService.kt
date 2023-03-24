@@ -14,20 +14,23 @@ import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 
-internal object  KoreAiService {
+internal object KoreAiService {
     private val _baseUrl = "https://bots.kore.ai/chatbot/v2/webhook/" + KoreAiSDK.botId
 
     @OptIn(DelicateCoroutinesApi::class)
     fun sendMessage(message: String): LiveData<String?> {
         val returnData = MutableLiveData<String?>()
         GlobalScope.launch(Dispatchers.IO) {
-            val connection = _setupConnection(message)
-
-            val responseCode = connection.responseCode
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                returnData.postValue(connection.inputStream.bufferedReader().readText())
-            } else {
-                Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
+            try {
+                val connection = _setupConnection(message)
+                val responseCode = connection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    returnData.postValue(connection.inputStream.bufferedReader().readText())
+                } else {
+                    Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
+                }
+            } catch (ex: Exception) {
+                returnData.postValue(null)
             }
         }
         return returnData

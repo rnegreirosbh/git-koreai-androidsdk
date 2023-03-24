@@ -1,6 +1,7 @@
 package com.stone.koreai_android_sdk.messageViews
 
 import android.content.res.Resources
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlin.math.roundToInt
@@ -27,4 +28,6 @@ internal abstract class BaseMessageView(context: AppCompatActivity) {
         owner: MessageOwner,
         imageUrl: String? = null
     ): ConstraintLayout
+
+    abstract fun updateToErrorState()
 }

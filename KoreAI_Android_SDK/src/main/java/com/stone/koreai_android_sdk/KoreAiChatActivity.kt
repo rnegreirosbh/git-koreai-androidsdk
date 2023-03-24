@@ -5,21 +5,27 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
+import android.util.TypedValue
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
+import com.stone.koreai_android_sdk.messageViews.*
+import com.stone.koreai_android_sdk.messageViews.BaseMessageView
 import com.stone.koreai_android_sdk.messageViews.ImageMessageView
 import com.stone.koreai_android_sdk.messageViews.MessageOwner
 import com.stone.koreai_android_sdk.messageViews.TextMessageView
-import com.stone.koreai_android_sdk.messageViews.px
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,24 +55,28 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         val etMessage = findViewById<AppCompatEditText>(R.id.etMessage)
         val ivSendMessageButton = findViewById<AppCompatImageView>(R.id.ivSendMessageButton)
 
-        etMessage.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                ivSendMessageButton.performClick()
-                true
-            } else false
-        }
-
         ivSendMessageButton.setOnClickListener {
             val message = etMessage?.text.toString()
             if (message.isNotEmpty()) {
-                _addUserMessage(message)
+                val view = _addUserMessage(message)
                 etMessage?.text?.clear()
+                _sendMessage(message, view)
+            }
+        }
 
-                KoreAiService.sendMessage(message).observe(this) {
-                    val list = _parseJson(it.toString())
-                    for (item in list) {
-                        _addMessageView(item.message, item.time, MessageOwner.Bot)
-                    }
+        _sendMessage("Vamos conversar!")
+    }
+
+    private fun _sendMessage(message: String, view: ConstraintLayout? = null) {
+        KoreAiService.sendMessage(message).observe(this) {
+            if (it == null) {
+                if (view != null) {
+                    _errorMark(view)
+                }
+            } else {
+                val list = _parseJson(it.toString())
+                for (item in list) {
+                    _addMessageView(item.message, item.time, MessageOwner.Bot)
                 }
             }
         }
@@ -96,14 +106,14 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun _addUserMessage(message: String) {
+    private fun _addUserMessage(message: String): ConstraintLayout {
         // Hide keyboard
         if (currentFocus != null && currentFocus!!.windowToken != null) {
             val inputManager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.SHOW_FORCED)
         }
 
-        _addMessageView(message, _getTime(Date()), MessageOwner.User)
+        return _addMessageView(message, _getTime(Date()), MessageOwner.User)
     }
 
     private fun _getTime(date: Date): String {
@@ -126,38 +136,63 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         return list
     }
 
-    private fun _addMessageView(message: String, time: String, owner: MessageOwner) {
+    private fun _addMessageView(message: String, time: String, owner: MessageOwner): ConstraintLayout {
         val ccMainLayout = findViewById<ConstraintLayout>(R.id.ccMainLayout)
 
-        val view: ConstraintLayout
+        val layout: ConstraintLayout
         val pos = message.indexOf("[Image]")
         if (pos >= 0) {
             val text = message.substring(0, pos)
             val imageUrl = message.substring(pos + 8, message.length - 1)
-            view = ImageMessageView(this).getLayout(text, time, owner, imageUrl)
+            layout = ImageMessageView(this).getLayout(text, time, owner, imageUrl)
         } else {
-            view = TextMessageView(this).getLayout(message, time, owner)
+            layout = TextMessageView(this).getLayout(message, time, owner)
         }
 
-        ccMainLayout.addView(view)
+        ccMainLayout.addView(layout)
 
         val constraintSet = ConstraintSet()
         constraintSet.clone(ccMainLayout)
         if (owner == MessageOwner.Bot) {
-            constraintSet.connect(view.getId(), ConstraintSet.START, ccMainLayout.getId(), ConstraintSet.START, 10.px)
+            constraintSet.connect(layout.getId(), ConstraintSet.START, ccMainLayout.getId(), ConstraintSet.START, 10.px)
         } else {
-            constraintSet.connect(view.getId(), ConstraintSet.END, ccMainLayout.getId(), ConstraintSet.END, 10.px)
+            constraintSet.connect(layout.getId(), ConstraintSet.END, ccMainLayout.getId(), ConstraintSet.END, 10.px)
         }
         if (_lastView == null) {
-            constraintSet.connect(view.getId(), ConstraintSet.TOP, ccMainLayout.getId(), ConstraintSet.TOP, 10.px)
+            constraintSet.connect(layout.getId(), ConstraintSet.TOP, ccMainLayout.getId(), ConstraintSet.TOP, 10.px)
         } else {
             val margin = if ((_lastMessageOwner == MessageOwner.Bot).xor(owner == MessageOwner.Bot)) 10.px else 4.px
-            constraintSet.connect(view.getId(), ConstraintSet.TOP, _lastView!!.getId(), ConstraintSet.BOTTOM, margin)
+            constraintSet.connect(layout.getId(), ConstraintSet.TOP, _lastView!!.getId(), ConstraintSet.BOTTOM, margin)
         }
 
         constraintSet.applyTo(ccMainLayout)
-        _lastView = view
+
+        val svChat = findViewById<ScrollView>(R.id.svChat)
+        svChat.post {
+            svChat.fullScroll(View.FOCUS_DOWN)
+        }
+
+        _lastView = layout
         _lastMessageOwner = owner
+        return layout
+    }
+
+    private fun _errorMark(view: ConstraintLayout) {
+        val ccMainLayout = findViewById<ConstraintLayout>(R.id.ccMainLayout)
+
+        val ivImage = AppCompatImageView(this)
+        ivImage.id = View.generateViewId()
+        ivImage.setImageDrawable(ContextCompat.getDrawable(this, android.R.drawable.stat_notify_error))
+        ivImage.setColorFilter(ContextCompat.getColor(this, R.color.KoreAiSdkErrorTextColor));
+
+        ccMainLayout.addView(ivImage)
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(ccMainLayout)
+        constraintSet.connect(ivImage.getId(), ConstraintSet.END, view.getId(), ConstraintSet.START, 3.px)
+        constraintSet.connect(ivImage.getId(), ConstraintSet.TOP, view.getId(), ConstraintSet.TOP, 3.px)
+
+        constraintSet.applyTo(ccMainLayout)
     }
 
     inner class MessageData(data: JSONObject) {
@@ -181,3 +216,21 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         }
     }
 }
+
+/*
+    val tvError = AppCompatTextView(_context)
+    tvError.id = View.generateViewId()
+    tvError.text = _context.getString(R.string.KoreAiSdkErrorMessage)
+    tvError.setTextSize(TypedValue.COMPLEX_UNIT_SP, _timeFontSize)
+    tvError.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkErrorTextColor))
+    tvError.layoutParams = ConstraintLayout.LayoutParams(
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    tvError.visibility = View.GONE
+    layout.addView(tvError)
+
+    constraintSet.connect(tvError.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, 5.px)
+    constraintSet.connect(tvError.getId(), ConstraintSet.TOP, tvTime.getId(), ConstraintSet.BOTTOM, 5.px)
+    constraintSet.connect(tvError.getId(), ConstraintSet.BOTTOM, layout.getId(), ConstraintSet.BOTTOM, 5.px)
+ */

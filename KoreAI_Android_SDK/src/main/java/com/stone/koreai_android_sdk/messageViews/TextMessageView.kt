@@ -13,6 +13,8 @@ import com.stone.koreai_android_sdk.R
 
 internal class TextMessageView(context: AppCompatActivity): BaseMessageView(context)  {
 
+    private var _parentView: ConstraintLayout? = null
+    
     override fun getLayout(
         message: String,
         time: String,
@@ -56,18 +58,6 @@ internal class TextMessageView(context: AppCompatActivity): BaseMessageView(cont
         )
         layout.addView(tvTime)
 
-        val tvError = AppCompatTextView(_context)
-        tvError.id = View.generateViewId()
-        tvError.text = time
-        tvError.setTextSize(TypedValue.COMPLEX_UNIT_SP, _timeFontSize)
-        tvError.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkErrorTextColor))
-        tvError.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        tvError.visibility = View.GONE
-        layout.addView(tvError)
-
         val constraintSet = ConstraintSet()
         constraintSet.clone(layout)
 
@@ -92,7 +82,16 @@ internal class TextMessageView(context: AppCompatActivity): BaseMessageView(cont
 
         constraintSet.applyTo(layout)
 
+        _parentView = layout
         return layout
+    }
+
+   override fun updateToErrorState() {
+        //if (_parentView != null) {
+        //    var errorView = _parentView.findViewById<View>(R.id.)
+        //    _erroView!!.visibility = View.VISIBLE
+        //    _erroView!!.invalidate()
+        //}
     }
 
     private fun _isTimeViewOverMessage(message: String): TimeMessageFormat {

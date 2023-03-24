@@ -20,6 +20,7 @@
             android:id="@+id/ccMainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:background="@color/KoreAiSdkChatBackgroundColor">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -44,11 +45,11 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="@string/chat_initial_message"
             android:textSize="13sp"
             android:maxLines="3"
             android:background="@drawable/layout_message_edittext"
-            android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"/>
+            android:inputType="textNoSuggestions|textVisiblePassword|textMultiLine"
+            android:imeOptions="actionDone"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivSendMessageButton"
@@ -59,8 +60,7 @@
             app:layout_constraintTop_toTopOf="@id/etMessage"
             app:layout_constraintBottom_toBottomOf="@id/etMessage"
             android:src="@android:drawable/ic_media_play"
-            app:tint="@color/KoreAiSdkBotActionBarColor"
-            android:imeOptions="actionDone"/>
+            app:tint="@color/KoreAiSdkBotActionBarColor"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

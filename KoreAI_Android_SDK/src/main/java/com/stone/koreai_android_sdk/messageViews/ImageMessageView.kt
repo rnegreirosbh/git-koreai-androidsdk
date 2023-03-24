@@ -102,6 +102,8 @@ internal class ImageMessageView(context: AppCompatActivity): BaseMessageView(con
         return layout
     }
 
+    override fun updateToErrorState() { }
+
     @OptIn(DelicateCoroutinesApi::class)
     private fun _downloadImage(url: String) = GlobalScope.async {
         withContext(Dispatchers.IO) {
