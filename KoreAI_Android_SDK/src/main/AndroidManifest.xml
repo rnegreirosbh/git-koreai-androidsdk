@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.stone.koreai_android_sdk">
+
+    <application>
+        <activity
+            android:name=".KoreAiChatActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+    </application>
+
+</manifest>
