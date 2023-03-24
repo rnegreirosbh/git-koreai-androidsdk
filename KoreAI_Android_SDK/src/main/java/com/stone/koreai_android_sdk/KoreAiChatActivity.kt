@@ -5,11 +5,9 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
-import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -18,9 +16,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
-import com.stone.koreai_android_sdk.factory.MessageOwner
-import com.stone.koreai_android_sdk.factory.MessageViewFactory
-import com.stone.koreai_android_sdk.factory.px
+import com.stone.koreai_android_sdk.messageViews.ImageMessageView
+import com.stone.koreai_android_sdk.messageViews.MessageOwner
+import com.stone.koreai_android_sdk.messageViews.TextMessageView
+import com.stone.koreai_android_sdk.messageViews.px
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,7 +27,6 @@ import java.util.*
 @SuppressLint("SimpleDateFormat")
 internal class KoreAiChatActivity : AppCompatActivity() {
 
-    private lateinit var _factory: MessageViewFactory
     private var _lastMessageOwner: MessageOwner = MessageOwner.User
     private var _lastView: ConstraintLayout? = null
 
@@ -47,8 +45,6 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         val hexColor = "#" + Integer.toHexString(titleColor).substring(2)
         supportActionBar?.title = Html.fromHtml("<font color=\"$hexColor\">$title</font>")
         supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.KoreAiSdkBotActionBarColor)))
-
-        _factory = MessageViewFactory(this)
 
         val etMessage = findViewById<AppCompatEditText>(R.id.etMessage)
         val ivSendMessageButton = findViewById<AppCompatImageView>(R.id.ivSendMessageButton)
@@ -132,7 +128,17 @@ internal class KoreAiChatActivity : AppCompatActivity() {
 
     private fun _addMessageView(message: String, time: String, owner: MessageOwner) {
         val ccMainLayout = findViewById<ConstraintLayout>(R.id.ccMainLayout)
-        val view = _factory.getMessageView(message, time, owner)
+
+        val view: ConstraintLayout
+        val pos = message.indexOf("[Image]")
+        if (pos >= 0) {
+            val text = message.substring(0, pos)
+            val imageUrl = message.substring(pos + 8, message.length - 1)
+            view = ImageMessageView(this).getLayout(text, time, owner, imageUrl)
+        } else {
+            view = TextMessageView(this).getLayout(message, time, owner)
+        }
+
         ccMainLayout.addView(view)
 
         val constraintSet = ConstraintSet()
