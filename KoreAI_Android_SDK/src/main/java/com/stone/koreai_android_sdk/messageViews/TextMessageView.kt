@@ -90,14 +90,6 @@ internal class TextMessageView(context: AppCompatActivity): BaseMessageView(cont
         return layout
     }
 
-   override fun updateToErrorState() {
-        //if (_parentView != null) {
-        //    var errorView = _parentView.findViewById<View>(R.id.)
-        //    _erroView!!.visibility = View.VISIBLE
-        //    _erroView!!.invalidate()
-        //}
-    }
-
     private fun _isTimeViewOverMessage(message: String): TimeMessageFormat {
         val tv = TextView(_context)
         tv.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT)

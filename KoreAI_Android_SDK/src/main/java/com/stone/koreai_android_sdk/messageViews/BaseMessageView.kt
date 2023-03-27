@@ -28,6 +28,4 @@ internal abstract class BaseMessageView(context: AppCompatActivity) {
         owner: MessageOwner,
         imageUrl: String? = null
     ): ConstraintLayout
-
-    abstract fun updateToErrorState()
 }

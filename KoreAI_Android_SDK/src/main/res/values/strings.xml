@@ -1,2 +1,4 @@
 <resources>
+    <string name="KoreAiSdkWelcomeMessage">Vamos conversar!</string>
+    <string name="KoreAiSdkLeaveActivityMessage">Chat history will be lost.\nDo you wish to continue?</string>
 </resources>

@@ -89,23 +89,21 @@ internal class ImageMessageView(context: AppCompatActivity): BaseMessageView(con
         val constraintSet = ConstraintSet()
         constraintSet.clone(layout)
 
-        constraintSet.connect(tvMessage.getId(), ConstraintSet.START, layout.getId(), ConstraintSet.START, 5.px)
-        constraintSet.connect(tvMessage.getId(), ConstraintSet.TOP, layout.getId(), ConstraintSet.TOP, 5.px)
-        constraintSet.connect(ivImage.getId(), ConstraintSet.START, layout.getId(), ConstraintSet.START, 5.px)
+        constraintSet.connect(tvMessage.id, ConstraintSet.START, layout.id, ConstraintSet.START, 5.px)
+        constraintSet.connect(tvMessage.id, ConstraintSet.TOP, layout.id, ConstraintSet.TOP, 5.px)
+        constraintSet.connect(ivImage.id, ConstraintSet.START, layout.id, ConstraintSet.START, 5.px)
         if (bitmap!!.width > _maxSize) {
-            constraintSet.connect(ivImage.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, 5.px)
+            constraintSet.connect(ivImage.id, ConstraintSet.END, layout.id, ConstraintSet.END, 5.px)
         }
-        constraintSet.connect(ivImage.getId(), ConstraintSet.TOP, tvMessage.getId(), ConstraintSet.BOTTOM, 5.px)
-        constraintSet.connect(ivImage.getId(), ConstraintSet.BOTTOM, layout.getId(), ConstraintSet.BOTTOM, 5.px)
-        constraintSet.connect(tvTime.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, 5.px)
-        constraintSet.connect(tvTime.getId(), ConstraintSet.BOTTOM, layout.getId(), ConstraintSet.BOTTOM, 5.px)
+        constraintSet.connect(ivImage.id, ConstraintSet.TOP, tvMessage.id, ConstraintSet.BOTTOM, 5.px)
+        constraintSet.connect(ivImage.id, ConstraintSet.BOTTOM, layout.id, ConstraintSet.BOTTOM, 5.px)
+        constraintSet.connect(tvTime.id, ConstraintSet.END, layout.id, ConstraintSet.END, 5.px)
+        constraintSet.connect(tvTime.id, ConstraintSet.BOTTOM, layout.id, ConstraintSet.BOTTOM, 5.px)
 
         constraintSet.applyTo(layout)
 
         return layout
     }
-
-    override fun updateToErrorState() { }
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun _downloadImage(url: String) = GlobalScope.async {

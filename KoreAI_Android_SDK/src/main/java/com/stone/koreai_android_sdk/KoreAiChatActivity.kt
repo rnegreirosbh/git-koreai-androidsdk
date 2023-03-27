@@ -65,7 +65,7 @@ internal class KoreAiChatActivity : AppCompatActivity() {
             }
         }
 
-        _sendMessage("Vamos conversar!")
+        _sendMessage(getString(R.string.KoreAiSdkWelcomeMessage))
     }
 
     private fun _sendMessage(message: String, view: ConstraintLayout? = null) {
@@ -88,7 +88,7 @@ internal class KoreAiChatActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             val builder = AlertDialog.Builder(this)
-            builder.setMessage("Chat history will be lost.\nDo you wish to continue?")
+            builder.setMessage(getString(R.string.KoreAiSdkLeaveActivityMessage))
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, _ ->
                     super.onBackPressed()
@@ -155,15 +155,15 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         val constraintSet = ConstraintSet()
         constraintSet.clone(ccMainLayout)
         if (owner == MessageOwner.Bot) {
-            constraintSet.connect(layout.getId(), ConstraintSet.START, ccMainLayout.getId(), ConstraintSet.START, 10.px)
+            constraintSet.connect(layout.id, ConstraintSet.START, ccMainLayout.id, ConstraintSet.START, 10.px)
         } else {
-            constraintSet.connect(layout.getId(), ConstraintSet.END, ccMainLayout.getId(), ConstraintSet.END, 10.px)
+            constraintSet.connect(layout.id, ConstraintSet.END, ccMainLayout.id, ConstraintSet.END, 10.px)
         }
         if (_lastView == null) {
-            constraintSet.connect(layout.getId(), ConstraintSet.TOP, ccMainLayout.getId(), ConstraintSet.TOP, 10.px)
+            constraintSet.connect(layout.id, ConstraintSet.TOP, ccMainLayout.id, ConstraintSet.TOP, 10.px)
         } else {
             val margin = if ((_lastMessageOwner == MessageOwner.Bot).xor(owner == MessageOwner.Bot)) 10.px else 4.px
-            constraintSet.connect(layout.getId(), ConstraintSet.TOP, _lastView!!.getId(), ConstraintSet.BOTTOM, margin)
+            constraintSet.connect(layout.id, ConstraintSet.TOP, _lastView!!.id, ConstraintSet.BOTTOM, margin)
         }
 
         constraintSet.applyTo(ccMainLayout)
@@ -190,8 +190,8 @@ internal class KoreAiChatActivity : AppCompatActivity() {
 
         val constraintSet = ConstraintSet()
         constraintSet.clone(ccMainLayout)
-        constraintSet.connect(ivImage.getId(), ConstraintSet.END, view.getId(), ConstraintSet.START, 3.px)
-        constraintSet.connect(ivImage.getId(), ConstraintSet.TOP, view.getId(), ConstraintSet.TOP, 3.px)
+        constraintSet.connect(ivImage.id, ConstraintSet.END, view.id, ConstraintSet.START, 3.px)
+        constraintSet.connect(ivImage.id, ConstraintSet.TOP, view.id, ConstraintSet.TOP, 3.px)
 
         constraintSet.applyTo(ccMainLayout)
     }
@@ -208,7 +208,7 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         private fun _parseTime(dateStr: String): String {
             val currentLocale = ConfigurationCompat.getLocales(resources.configuration)[0]
             val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", currentLocale)
-            parser.setTimeZone(TimeZone.getTimeZone("GMT"))
+            parser.timeZone = TimeZone.getTimeZone("GMT")
             val date = parser.parse(dateStr)
 
             val formatter = SimpleDateFormat("HH:mm")
