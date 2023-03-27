@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="KoreAiSdkChatBackgroundColor">#EFEAE2</color>
-    <color name="KoreAiSdkBotActionBarColor">#25D366</color>
+    <color name="KoreAiSdkChatBackgroundColor">#FFFFFF</color>
+    <color name="KoreAiSdkBotActionBarColor">#0D6EFD</color>
     <color name="KoreAiSdkBotActionBarTextColor">#FFFFFF</color>
-    <color name="KoreAiSdkMessageTextColor">#000000</color>
+    <color name="KoreAiSdkBotMessageBackgroundColor">#F3F5F8</color>
+    <color name="KoreAiSdkUserMessageBackgroundColor">#ADD8E6</color>
+    <color name="KoreAiSdkBotMessageTextColor">#000000</color>
+    <color name="KoreAiSdkUserMessageTextColor">#000000</color>
     <color name="KoreAiSdkTimeTextColor">#667781</color>
     <color name="KoreAiSdkErrorTextColor">#cc0000</color>
 </resources>

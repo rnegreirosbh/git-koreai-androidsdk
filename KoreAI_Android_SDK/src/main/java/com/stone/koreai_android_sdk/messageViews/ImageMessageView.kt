@@ -1,18 +1,17 @@
 package com.stone.koreai_android_sdk.messageViews
 
+import ai.kore.androidsdk.R
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import com.stone.koreai_android_sdk.R
 import kotlinx.coroutines.*
 import java.net.URL
 
@@ -42,7 +41,11 @@ internal class ImageMessageView(context: AppCompatActivity): BaseMessageView(con
         tvMessage.text = message
         tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, _messageFontSize)
         tvMessage.maxWidth = _maxSize
-        tvMessage.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkMessageTextColor))
+        if (owner == MessageOwner.Bot) {
+            tvMessage.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkBotMessageTextColor))
+        } else {
+            tvMessage.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkUserMessageTextColor))
+        }
         tvMessage.layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT

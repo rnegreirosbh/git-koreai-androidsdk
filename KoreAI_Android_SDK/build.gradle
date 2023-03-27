@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
+    namespace = "ai.kore.androidsdk"
     compileSdk 32
 
     defaultConfig {
@@ -12,6 +14,25 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
+    project.publishing.publications {
+        release(MavenPublication) {
+            groupId = 'ai.kore.androidsdk'
+            artifactId = 'git-koreai-androidsdk'
+            version = '0.0.01'
+
+            afterEvaluate {
+                from components.release
+            }
+        }
     }
 
     buildTypes {

@@ -1,5 +1,6 @@
 package com.stone.koreai_android_sdk.messageViews
 
+import ai.kore.androidsdk.R
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import com.stone.koreai_android_sdk.R
 
 internal class TextMessageView(context: AppCompatActivity): BaseMessageView(context)  {
 
@@ -39,7 +39,11 @@ internal class TextMessageView(context: AppCompatActivity): BaseMessageView(cont
         tvMessage.text = message
         tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, _messageFontSize)
         tvMessage.maxWidth = _maxSize
-        tvMessage.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkMessageTextColor))
+        if (owner == MessageOwner.Bot) {
+            tvMessage.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkBotMessageTextColor))
+        } else {
+            tvMessage.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkUserMessageTextColor))
+        }
         tvMessage.layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT

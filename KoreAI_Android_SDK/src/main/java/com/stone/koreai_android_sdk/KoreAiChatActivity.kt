@@ -1,5 +1,6 @@
 package com.stone.koreai_android_sdk
 
+import ai.kore.androidsdk.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -216,21 +217,3 @@ internal class KoreAiChatActivity : AppCompatActivity() {
         }
     }
 }
-
-/*
-    val tvError = AppCompatTextView(_context)
-    tvError.id = View.generateViewId()
-    tvError.text = _context.getString(R.string.KoreAiSdkErrorMessage)
-    tvError.setTextSize(TypedValue.COMPLEX_UNIT_SP, _timeFontSize)
-    tvError.setTextColor(ContextCompat.getColor(_context, R.color.KoreAiSdkErrorTextColor))
-    tvError.layoutParams = ConstraintLayout.LayoutParams(
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT
-    )
-    tvError.visibility = View.GONE
-    layout.addView(tvError)
-
-    constraintSet.connect(tvError.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, 5.px)
-    constraintSet.connect(tvError.getId(), ConstraintSet.TOP, tvTime.getId(), ConstraintSet.BOTTOM, 5.px)
-    constraintSet.connect(tvError.getId(), ConstraintSet.BOTTOM, layout.getId(), ConstraintSet.BOTTOM, 5.px)
- */
