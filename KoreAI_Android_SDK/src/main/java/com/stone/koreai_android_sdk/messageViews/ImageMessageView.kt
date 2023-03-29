@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import kotlinx.coroutines.*
 import java.net.URL
 
@@ -25,7 +26,7 @@ internal class ImageMessageView(context: AppCompatActivity): BaseMessageView(con
     ): ConstraintLayout {
         val layout = ConstraintLayout(_context)
         layout.id = View.generateViewId()
-        layout.elevation = 10.0F
+        layout.elevation = 5.0F
         layout.layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT

@@ -36,6 +36,7 @@ internal class KoreAiChatActivity : AppCompatActivity() {
 
     private var _lastMessageOwner: MessageOwner = MessageOwner.User
     private var _lastView: ConstraintLayout? = null
+    private lateinit var _paddingBottom: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,13 @@ internal class KoreAiChatActivity : AppCompatActivity() {
                 _sendMessage(message, view)
             }
         }
+
+        _paddingBottom = View(this)
+        _paddingBottom.id = View.generateViewId()
+        _paddingBottom.layoutParams = ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            10.px
+        )
 
         _sendMessage(getString(R.string.KoreAiSdkWelcomeMessage))
     }
@@ -150,7 +158,11 @@ internal class KoreAiChatActivity : AppCompatActivity() {
             layout = TextMessageView(this).getLayout(message, time, owner)
         }
 
+        if (_lastView != null) {
+            ccMainLayout.removeView(_paddingBottom)
+        }
         ccMainLayout.addView(layout)
+        ccMainLayout.addView(_paddingBottom)
 
         val constraintSet = ConstraintSet()
         constraintSet.clone(ccMainLayout)
@@ -165,6 +177,8 @@ internal class KoreAiChatActivity : AppCompatActivity() {
             val margin = if ((_lastMessageOwner == MessageOwner.Bot).xor(owner == MessageOwner.Bot)) 10.px else 4.px
             constraintSet.connect(layout.id, ConstraintSet.TOP, _lastView!!.id, ConstraintSet.BOTTOM, margin)
         }
+        constraintSet.connect(_paddingBottom.id, ConstraintSet.TOP, layout.id, ConstraintSet.BOTTOM, 0)
+        constraintSet.connect(_paddingBottom.id, ConstraintSet.BOTTOM, layout.id, ConstraintSet.BOTTOM, 0)
 
         constraintSet.applyTo(ccMainLayout)
 
