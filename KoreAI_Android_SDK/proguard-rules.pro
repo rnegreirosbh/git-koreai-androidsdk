@@ -61,4 +61,5 @@
 -dontwarn org.bouncycastle.**
 
 # SDK
--keep class com.stone.koreai_android_sdk.KoreAiSDK {}
+-keep class com.stone.koreai_android_sdk.** { *; }
+-keepnames class com.stone.koreai_android_sdk.** { *; }
