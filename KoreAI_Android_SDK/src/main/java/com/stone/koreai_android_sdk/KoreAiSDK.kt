@@ -19,7 +19,7 @@ object KoreAiSDK {
         _chatbotSecurityId = chatbotSecurityId
         _isSDKInitialized = true
     }
-
+    /*
     fun showChatActivity(context: Context, userId: String, title: String) {
         if (_isSDKInitialized) {
             _userId = userId
@@ -30,10 +30,17 @@ object KoreAiSDK {
             Log.e("Error", "SDK not initialized")
         }
     }
-
-    fun showWebviewChatActivity(context: Context, launcher: ActivityResultLauncher<Intent>) {
+    fun showChatActivity(context: Context, launcher: ActivityResultLauncher<Intent>) {
         if (_isSDKInitialized) {
             launcher.launch(Intent(context, KoreAiWebviewChatActivity::class.java))
+        } else {
+            Log.e("Error", "SDK not initialized")
+        }
+    }
+    */
+    fun showChatActivity(context: Context) {
+        if (_isSDKInitialized) {
+            context.startActivity(Intent(context, KoreAiWebviewChatActivity::class.java))
         } else {
             Log.e("Error", "SDK not initialized")
         }

@@ -14,21 +14,22 @@ import com.koreai.sample.R
 import com.stone.koreai_android_sdk.KoreAiSDK
 
 class TestSDKActivity : AppCompatActivity() {
-
+    /*
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
             }
     }
-
+    */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_sdk_activity)
 
         val btTestSDK = findViewById<AppCompatButton>(R.id.btTestSDK)
         btTestSDK?.setOnClickListener {
-            KoreAiSDK.showWebviewChatActivity(this, startForResult)
+            //KoreAiSDK.showChatActivity(this, startForResult)
+            KoreAiSDK.showChatActivity(this)
         }
     }
 }
