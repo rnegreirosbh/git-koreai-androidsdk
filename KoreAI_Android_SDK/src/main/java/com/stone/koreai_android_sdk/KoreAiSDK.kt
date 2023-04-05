@@ -1,13 +1,9 @@
 package com.stone.koreai_android_sdk
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 
 object KoreAiSDK {
     private var _isSDKInitialized = false
