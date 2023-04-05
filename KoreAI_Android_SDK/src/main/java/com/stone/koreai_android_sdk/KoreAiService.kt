@@ -15,7 +15,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 internal object KoreAiService {
-    private val _baseUrl = "https://bots.kore.ai/chatbot/v2/webhook/" + KoreAiSDK.botId
+    //private val _baseUrl = "https://bots.kore.ai/chatbot/v2/webhook/" + KoreAiSDK.botId
+    private val _baseUrl = "https://bots.kore.ai/chatbot/v2/webhook/"
 
     @OptIn(DelicateCoroutinesApi::class)
     fun sendMessage(message: String): LiveData<String?> {
@@ -61,13 +62,13 @@ internal object KoreAiService {
         headers.put("typ", "JWT")
 
         val claims : HashMap<String, Any?> = HashMap<String, Any?>()
-        claims.put("appId", KoreAiSDK.clientId)
+        //claims.put("appId", KoreAiSDK.clientId)
 
         return try {
             Jwts.builder()
                 .setHeader(headers)
                 .setClaims(claims)
-                .signWith(Keys.hmacShaKeyFor(KoreAiSDK.clientSecret!!.toByteArray()), SignatureAlgorithm.HS256)
+                //.signWith(Keys.hmacShaKeyFor(KoreAiSDK.clientSecret!!.toByteArray()), SignatureAlgorithm.HS256)
                 .compact()
         } catch (_: Exception) {
             null
