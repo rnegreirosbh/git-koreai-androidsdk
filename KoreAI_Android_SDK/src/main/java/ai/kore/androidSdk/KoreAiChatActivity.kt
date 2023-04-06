@@ -1,4 +1,4 @@
-package com.stone.koreai_android_sdk
+package ai.kore.androidsdk
 
 import ai.kore.androidsdk.R
 import android.annotation.SuppressLint
@@ -13,11 +13,11 @@ import androidx.core.content.ContextCompat
 import im.delight.android.webview.AdvancedWebView
 
 @SuppressLint("SimpleDateFormat")
-internal class KoreAiWebviewChatActivity : AppCompatActivity(), AdvancedWebView.Listener {
+internal class KoreAiChatActivity : AppCompatActivity(), AdvancedWebView.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_kore_ai_webview_chat)
+        setContentView(R.layout.activity_kore_ai_chat)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.KoreAiSdkStatusBarColor))

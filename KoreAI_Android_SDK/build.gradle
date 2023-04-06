@@ -27,7 +27,7 @@ android {
         release(MavenPublication) {
             groupId = 'ai.kore.androidsdk'
             artifactId = 'git-koreai-androidsdk'
-            version = '0.0.01'
+            version = '0.2.00'
 
             afterEvaluate {
                 from components.release

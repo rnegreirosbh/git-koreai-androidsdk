@@ -61,5 +61,9 @@
 -dontwarn org.bouncycastle.**
 
 # SDK
--keep class com.stone.koreai_android_sdk.** { *; }
--keepnames class com.stone.koreai_android_sdk.** { *; }
+-keep class ai.kore.androidsdk.** { *; }
+-keepnames class ai.kore.androidsdk.** { *; }
+
+# Webview
+-keep class * extends android.webkit.WebChromeClient { *; }
+-dontwarn im.delight.android.webview.**

@@ -1,4 +1,4 @@
-package com.stone.koreai_android_sdk.data
+package ai.kore.androidsdk.data
 
 import org.json.JSONObject
 

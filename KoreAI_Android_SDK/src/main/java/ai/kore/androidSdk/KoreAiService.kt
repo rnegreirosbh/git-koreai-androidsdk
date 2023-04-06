@@ -1,11 +1,9 @@
-package com.stone.koreai_android_sdk
+package ai.kore.androidsdk
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -16,7 +14,7 @@ import java.net.URL
 
 internal object KoreAiService {
     //private val _baseUrl = "https://bots.kore.ai/chatbot/v2/webhook/" + KoreAiSDK.botId
-    private val _baseUrl = "https://bots.kore.ai/chatbot/v2/webhook/"
+    private val _baseUrl = ""
 
     @OptIn(DelicateCoroutinesApi::class)
     fun sendMessage(message: String): LiveData<String?> {
