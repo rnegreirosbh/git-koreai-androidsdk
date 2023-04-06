@@ -61,8 +61,8 @@
 -dontwarn org.bouncycastle.**
 
 # SDK
--keep class ai.kore.androidsdk.** { *; }
--keepnames class ai.kore.androidsdk.** { *; }
+-keep class ai.kore.androidsdk.KoreAiSDK { *; }
+-keepnames class ai.kore.androidsdk.KoreAiSDK { *; }
 
 # Webview
 -keep class * extends android.webkit.WebChromeClient { *; }
