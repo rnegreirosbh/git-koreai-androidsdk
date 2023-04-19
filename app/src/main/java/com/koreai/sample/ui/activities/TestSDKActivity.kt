@@ -12,7 +12,7 @@ import com.koreai.sample.R
 
 class TestSDKActivity : AppCompatActivity() {
 
-    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    /*val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 if (result.data != null && result.data!!.getStringExtra("action") != null) {
@@ -22,7 +22,7 @@ class TestSDKActivity : AppCompatActivity() {
                     Toast.makeText(this, "Sucesso- Sem action retornada", Toast.LENGTH_LONG).show()
                 }
             }
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,8 @@ class TestSDKActivity : AppCompatActivity() {
 
         val btTestSDK = findViewById<AppCompatButton>(R.id.btTestSDK)
         btTestSDK?.setOnClickListener {
-            KoreAiSDK.showChatActivity(this, startForResult)
-            //KoreAiSDK.showChatActivity(this)
+            //KoreAiSDK.showChatActivity(this, startForResult)
+            KoreAiSDK.showChatActivity(this)
         }
     }
 }

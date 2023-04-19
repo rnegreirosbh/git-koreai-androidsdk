@@ -8,12 +8,8 @@ import androidx.activity.result.ActivityResultLauncher
 object KoreAiSDK {
     private var _isSDKInitialized = false
     private var _chatbotSecurityId: String? = null
-    private var _userId: String? = null
 
     val chatbotSecurityId get() = _chatbotSecurityId
-    var userId :String?
-        get() = _userId
-        set(value) { _userId = value }
 
     fun init(chatbotSecurityId: String) {
         _chatbotSecurityId = chatbotSecurityId
