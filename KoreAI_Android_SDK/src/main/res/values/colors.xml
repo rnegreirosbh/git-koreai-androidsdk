@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="KoreAiSdkStatusBarColor">#FFFFFF</color>
     <color name="KoreAiSdkChatBackgroundColor">#FFFFFF</color>
     <color name="KoreAiSdkBotActionBarColor">#0D6EFD</color>
     <color name="KoreAiSdkBotActionBarTextColor">#FFFFFF</color>

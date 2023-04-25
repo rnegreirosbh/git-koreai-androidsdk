@@ -1,7 +1,7 @@
 package com.koreai.sample
 
-import ai.kore.androidsdk.KoreAiSDK
 import android.app.Application
+import com.stone.koreai_android_sdk.KoreAiSDK
 
 class MainApplication : Application() {
 
@@ -9,7 +9,9 @@ class MainApplication : Application() {
         super.onCreate()
 
         KoreAiSDK.init(
-            "3a34556e90c648e8aad5377f0b956741249133d5d33841d7900851412fa968ecsta0"
+            "st-a0285dd5-5819-5427-acde-4755c7ada06e",
+            "cs-7b5563e1-4548-5515-adce-476975efb41e",
+            "UfUT3WYOIYi5Y0uxl+ewFlg5cDSH/fdSdXfRL/y7rCA="
         )
     }
 }
