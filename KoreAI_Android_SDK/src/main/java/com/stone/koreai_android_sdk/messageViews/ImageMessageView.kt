@@ -1,4 +1,4 @@
-package com.stone.koreai_android_sdk.messageViews
+package ai.kore.androidsdk.messageViews
 
 import ai.kore.androidsdk.R
 import android.graphics.Bitmap

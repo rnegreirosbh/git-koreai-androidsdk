@@ -1,4 +1,4 @@
-package com.stone.koreai_android_sdk
+package ai.kore.androidsdk
 
 import android.content.Context
 import android.content.Intent

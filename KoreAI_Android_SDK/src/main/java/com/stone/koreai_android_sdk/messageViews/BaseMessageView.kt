@@ -1,4 +1,4 @@
-package com.stone.koreai_android_sdk.messageViews
+package ai.kore.androidsdk.messageViews
 
 import android.content.res.Resources
 import android.view.View

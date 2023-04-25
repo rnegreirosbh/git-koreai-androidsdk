@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.koreai.sample.R
 
-import com.stone.koreai_android_sdk.KoreAiSDK
+import ai.kore.androidsdk.KoreAiSDK
 
 class TestSDKActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
